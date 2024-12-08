@@ -8,14 +8,11 @@ from gazebo_msgs.msg import LinkState
 
 def add_model_to_Gazebo(model_name, model_path, pose):
     rospy.wait_for_service('gazebo/spawn_sdf_model')
-    try:
-        spawn_model = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
-        with open(model_path, 'r') as model_file:
-            model_xml = model_file.read()
-        spawn_model(model_name, model_xml,"", pose, "")
-        rospy.loginfo(f"Model  '{model_name}' spawned succesfully!")
-    except rospy.ServiceException as e:
-        rospy.logerr(f"Service call failed: {e}")
+    spawn_model = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
+    with open(model_path, 'r') as model_file:
+        model_xml = model_file.read()
+    spawn_model(model_name, model_xml,"", pose, "")
+    rospy.loginfo(f"Model  '{model_name}' spawned successfully!")
 
 x1 = random.uniform(0,9)
 y1 = random.uniform(0,9)
@@ -87,18 +84,18 @@ pose4.orientation.w = 1
 
 add_model_to_Gazebo(model_name4, model_path4, pose4)
 
-z = random.randint(0,3+1)
+z = random.randint(0,3)
 if z == 0:
-    model_name5 = 'blue_model'
+    model_name5 = 'blue_model1'
     model_path5 = '/home/clover/dronepoint/dronepoint_blue/dronepoint_blue.sdf'
 if z == 1:
-    model_name5 = 'green_model'
+    model_name5 = 'green_model1'
     model_path5 = '/home/clover/dronepoint/dronepoint_green/dronepoint_green.sdf'
 if z == 2:
-    model_name5 = 'red_model'
+    model_name5 = 'red_model1'
     model_path5 = '/home/clover/dronepoint/dronepoint_red/dronepoint_red.sdf'
 if z == 3:
-    model_name5 = 'yellow_model'
+    model_name5 = 'yellow_model1'
     model_path5 = '/home/clover/dronepoint/dronepoint_yellow/dronepoint_yellow.sdf'
 
 pose5 = Pose()
@@ -108,7 +105,3 @@ pose5.position.z = 0
 pose5.orientation.w = 1
 
 add_model_to_Gazebo(model_name5, model_path5, pose5)
-
-
-
-
